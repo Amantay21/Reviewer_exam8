@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+    <a class="nav-link" aria-current="page"  href="{% url 'webapp:index' %}">На главную</a>
+    <a class="nav-link" aria-current="page" href="{% url 'webapp:products_update' product.pk%}">Добавить проект</a>
+    <a class="nav-link" aria-current="page" href="{% url 'webapp:products_delete' product.pk%}">Удалить проект</a>
+    <a class="nav-link" aria-current="page" href="{% url 'webapp:review_create' product.pk%}">Добавить задачу</a>
+{% endblock %}
+
+{% block content %}
+    <h1>Product</h1>
+
+
+        <div class="card" >
+            <div class="card-body">
+                <h3 class="card-title">{{ product.title }}</h3>
+                <h5 class="card-title">{{ product.description }}</h5>
+                <p class="card-text">start date: {{ product.start_date }}</p>
+                <p class="card-text">End date: {{ product.end_date }}</p>
+                <li><a href="#">Edit</a></li>
+                <li><a href="#">Delete</a></li>
+            </div>
+        </div>
+
+
+    <div class="tasks d-flex justify-content-start row g-4">
+    {% for review in reviews %}
+        <div class="col-sm-12 col-md-6 col-lg-3 d-flex flex-row mb-3">
+        <div class="card my-3 " style="width: 18rem;">
+            <div class="card-body ">
+                <h5 class="card-title">{{ review.title }}</h5>
+                <h5 class="card-title">{{ review.w }}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{ review.description }}</h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{ review.updated_date }}</h6>
+                <p><a href="{% url 'webapp:review_view' pk=review.pk %}" class="card-link">Подробнее...</a></p>
+                <p><a href="{% url 'webapp:review_update' pk=review.pk %}" class="card-link">Редактировать</a></p>
+                <p><a href="{% url 'webapp:review_delete' pk=review.pk %}" class="card-link" >Delete</a></p>
+
+            </div>
+        </div>
+        </div>
+
+        {% empty %}
+        нет задач
+    {% endfor %}
+    </div>
+{% endblock %}

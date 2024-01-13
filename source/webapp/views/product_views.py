@@ -1,6 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.http import urlencode
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -9,10 +8,10 @@ from webapp.forms import SimpleSearchForm, ProductForms
 from webapp.models import Product
 
 
-class ProjectsView(ListView):
+class ProductsView(ListView):
     model = Product
-    template_name = 'projects/index.html'
-    context_object_name = 'projects'
+    template_name = 'products/index.html'
+    context_object_name = 'products'
     paginate_by = 5
 
     def get_search_form(self):
@@ -45,30 +44,30 @@ class ProjectsView(ListView):
         return context
 
 
-class ProjectDetailView(DetailView):
+class ProductDetailView(DetailView):
     model = Product
-    template_name = 'projects/projects_detail_view.html'
+    template_name = 'products/products_detail_view.html'
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
-    template_name = 'projects/projects_create.html'
+    template_name = 'products/products_create.html'
     form_class = ProductForms
 
     def get_success_url(self):
-        return reverse('webapp:projects_detail_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:products_detail_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectUpdateView(UpdateView):
+class ProductUpdateView(UpdateView):
     model = Product
-    template_name = 'projects/projects_update.html'
+    template_name = 'products/products_update.html'
     form_class = ProductForms
 
     def get_success_url(self):
-        return reverse('webapp:projects_detail_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:products_detail_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectDeleteView(DeleteView):
+class ProductDeleteView(DeleteView):
     model = Product
-    template_name = 'projects/projects_delete.html'
+    template_name = 'products/products_delete.html'
     success_url = reverse_lazy('webapp:index')

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block menu %}{% if request.user.is_authenticated %}<a class="nav-link" aria-current="page"
+                   href="{% url 'webapp:products_create' %}">Добавить продукт</a>{% endif %}{% endblock %}
+
+{% block content %}
+    <h1>Products</h1>
+    {{ request.user }}
+    <br>
+    {{ request.user.is_authenticated }}
+
+
+    {% if is_paginated %}
+    	{% include 'partial/pagination.html' %}
+    {% endif %}
+
+
+     <div class="tasks d-flex justify-content-start  row g-4 ">
+    {% for product in products %}
+
+    {% endfor %}
+    </div>
+    <div class="tasks d-flex justify-content-start row g-4">
+    {% for product in products %}
+        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="card" style="width: 18rem; ">
+          <img src="{{product.image}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+                <h5 class="card-subtitle mb-2 text-body-secondary">{{ product.category.title }}</h5>
+                <h4 class="card-subtitle mb-2 text-body-secondary">{{ product.grade }}</h4>
+                <p><a href="{% url 'webapp:products_detail_view' pk=product.pk %}" class="card-link">Подробнее...</a></p>
+                {% if request.user.is_authenticated %}<p>
+                    <a href="{% url 'webapp:products_update' pk=product.pk %}" class="card-link">Редактировать</a></p>
+                <p><a href="{% url 'webapp:products_delete' pk=product.pk %}" class="card-link" >Delete</a></p>
+          {% endif %}
+
+          </div>
+        </div>
+        </div>
+
+
+    {% empty %}
+    <p>Проекты не найдены</p>
+    {% endfor %}
+    </div>
+    {% if is_paginated %}
+    	{% include 'partial/pagination.html' %}
+    {% endif %}
+{% endblock %}

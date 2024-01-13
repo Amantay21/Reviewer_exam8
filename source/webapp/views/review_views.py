@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
 from webapp.forms import ReviewForms
-from webapp.models import Reviews, Products
+from webapp.models import Review, Product
 from django.views.generic import View, TemplateView, CreateView, UpdateView, DeleteView
 
 
@@ -18,21 +18,21 @@ from django.views.generic import View, TemplateView, CreateView, UpdateView, Del
 
 class ReviewView(TemplateView):
     template_name = 'tasks/tasks_view.html'
-    model = Task
+    model = Review
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        task = get_object_or_404(Task, pk=kwargs.get('pk'))
+        task = get_object_or_404(Review, pk=kwargs.get('pk'))
         context['task'] = task
         return context
 
 
 class TaskCreateView(CreateView):
     template_name = 'tasks/tasks_create.html'
-    form_class = TaskForms
+    form_class = ReviewForms
 
     def form_valid(self, form):
-        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
+        project = get_object_or_404(Product, pk=self.kwargs.get('pk'))
         task = form.save(commit=False)
         task.project = project
         task.save()
@@ -42,8 +42,8 @@ class TaskCreateView(CreateView):
 
 class TaskUpdateView(UpdateView):
     template_name = 'tasks/task_update.html'
-    model = Task
-    form_class = TaskForms
+    model = Review
+    form_class = ReviewForms
 
     def get_success_url(self):
         return reverse('webapp:projects_detail_view', kwargs={'pk': self.object.project.pk})
@@ -51,7 +51,7 @@ class TaskUpdateView(UpdateView):
 
 class TaskDeleteView(DeleteView):
     template_name = 'tasks/task_delete.html'
-    model = Task
+    model = Review
 
     def get_success_url(self):
         return reverse('webapp:projects_detail_view', kwargs={'pk': self.object.project.pk})

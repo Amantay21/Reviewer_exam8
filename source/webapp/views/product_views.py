@@ -6,11 +6,11 @@ from django.utils.http import urlencode
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from webapp.forms import SimpleSearchForm, ProductForms
-from webapp.models import Products
+from webapp.models import Product
 
 
 class ProjectsView(ListView):
-    model = Project
+    model = Product
     template_name = 'projects/index.html'
     context_object_name = 'projects'
     paginate_by = 5
@@ -46,29 +46,29 @@ class ProjectsView(ListView):
 
 
 class ProjectDetailView(DetailView):
-    model = Project
+    model = Product
     template_name = 'projects/projects_detail_view.html'
 
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
-    model = Project
+    model = Product
     template_name = 'projects/projects_create.html'
-    form_class = ProjectForms
+    form_class = ProductForms
 
     def get_success_url(self):
         return reverse('webapp:projects_detail_view', kwargs={'pk': self.object.pk})
 
 
 class ProjectUpdateView(UpdateView):
-    model = Project
+    model = Product
     template_name = 'projects/projects_update.html'
-    form_class = ProjectForms
+    form_class = ProductForms
 
     def get_success_url(self):
         return reverse('webapp:projects_detail_view', kwargs={'pk': self.object.pk})
 
 
 class ProjectDeleteView(DeleteView):
-    model = Project
+    model = Product
     template_name = 'projects/projects_delete.html'
     success_url = reverse_lazy('webapp:index')

@@ -21,7 +21,7 @@ class Product(models.Model):
 class Review(models.Model):
     author = models.CharField(max_length=200, null=False, blank=False, verbose_name='Автор')
     product = models.ForeignKey('webapp.Product', on_delete=models.CASCADE, verbose_name='Продукт',
-                                related_name='products')
+                                related_name='reviews')
     description = models.TextField(max_length=10000, null=True, blank=True, verbose_name='Описание')
     grade = models.IntegerField(verbose_name="Оценка")
     moderation = models.BooleanField(default=False, verbose_name="Модерация")

@@ -4,8 +4,8 @@
     <li><a href="{% url 'webapp:projects_detail_view' pk=project.pk %}">View</a></li>
 {% endblock %}
 {% block content %}
-    <h1>Are you sure want to delete this project "{{ project }}"?</h1>
-    <form method="POST" action="{% url "webapp:projects_delete" pk=project.pk %}" class="text-center">
+    <h1>Are you sure want to delete this product "{{ project }}"?</h1>
+    <form method="POST" action="{% url "webapp:products_delete" pk=project.pk %}" class="text-center">
         {% csrf_token %}
         <p><input type="submit" value="Confirm"></p>
         </form>
